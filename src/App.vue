@@ -1,17 +1,28 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!-- <TablaMultiplicar/>
+    <Deportes/>
+    <hr/>
+    <SumaNumerosParent/> -->
+    <Comics/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Comics from './components/Comics.vue'
+// import Deportes from './components/Deportes.vue';
+// import SumaNumerosParent from './components/SumaNumerosParent.vue';
+// import TablaMultiplicar from './components/TablaMultiplicar.vue';
+
+
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Comics
+    // TablaMultiplicar,
+    // Deportes,
+    // SumaNumerosParent
   }
 }
 </script>
