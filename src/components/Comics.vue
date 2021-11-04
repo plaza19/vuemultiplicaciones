@@ -1,13 +1,30 @@
 <template>
     <div class="container">
         <h1>Comics</h1>
+        <h2>Crear un comic</h2>
+        <label>Titulo</label><br/>
+        <input type="text" v-model="nuevoComic.titulo" class="form-control" required>
+        <label>Imagen</label><br/>
+        <input type="text" v-model="nuevoComic.imagen"  class="form-control">
+        <label>Descripcion</label><br/>
+        <input type="text" v-model="nuevoComic.descripcion" class="form-control">
+        <button class="btn btn-primary" @click="crearComic()">Crear comic</button>
+
         <div id="divFavorito" v-if="favorito != null">
             <h2>{{favorito.titulo}}</h2>
             <h5>{{favorito.descripcion}}</h5>
             <img :src=favorito.imagen>
         </div>
-        <div v-for="comic in comics" :key=comic class="container">
-            <Comic :comic_props="comic" v-on:seleccionarFavorito="seleccionarFavorito" v-on:eliminarComic="eliminarComic">{{index_aux +1}}</Comic>
+        <div v-if="editar != null" style="float-left">
+            <label>Titulo</label><br/>
+            <input type="text" v-model="editar.titulo" class="form-control">
+            <label>Imagen</label><br/>
+            <input type="text" v-model="editar.imagen" class="form-control">
+            <label>Descripcion</label><br/>
+            <input type="text" v-model="editar.descripcion" class="form-control">
+        </div>
+        <div v-for="(comic, index) in comics" :key=comic class="container">
+            <Comic :comic_props="comic" :index="index" v-on:seleccionarFavorito="seleccionarFavorito" v-on:eliminarComic="eliminarComic" v-on:modificarComic="modificarComic"></Comic>
         </div>
     </div>
 </template>
@@ -59,14 +76,25 @@ export default {
             }
    ],
    favorito : null,
-   index_aux : 0
+   editar : null,
+   nuevoComic : {}
         }
     },
     methods: {
         seleccionarFavorito(selectedComic) {
             this.favorito = selectedComic;
             console.log(selectedComic);
+        },
+        eliminarComic(deleteIndex) {
+            console.log("eliinando el comic " + deleteIndex);
+            this.comics.splice(deleteIndex, 1);
+        },
+        modificarComic(modComic) {
+            this.editar = modComic;
+        }, crearComic() {
+            this.comics.splice(0,0,this.nuevoComic);
         }
+
     }
 }
 
@@ -76,7 +104,7 @@ export default {
 <style scoped>
     #divFavorito {
         border: 1px solid black;
-        background-color: lightcoral;
+        background-color: lightgreen;
         padding: 10px;
     }
     img {
